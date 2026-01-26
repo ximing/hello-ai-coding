@@ -1,0 +1,81 @@
+{
+  "name": "osg-fe-ai-tools",
+  "version": "0.1.0",
+  "description": "AI Coding Assistant CLI - Your intelligent coding companion",
+  "private": true,
+  "type": "module",
+  "bin": {
+    "ai-code": "./bin/ai-code.js"
+  },
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "files": [
+    "dist",
+    "bin",
+    "README.md"
+  ],
+  "scripts": {
+    "build": "tsc",
+    "dev": "tsc --watch",
+    "start": "node bin/ai-code.js",
+    "lint": "eslint . --ext .js,.jsx,.ts,.tsx",
+    "lint:fix": "eslint . --ext .js,.jsx,.ts,.tsx --fix",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "prepare": "husky install",
+    "changeset": "changeset",
+    "changeset:version": "changeset version",
+    "release": "turbo run build && node scripts/publish-with-mnpm.cjs",
+    "pre:beta": "changeset pre enter beta",
+    "pre:alpha": "changeset pre enter alpha",
+    "pre:next": "changeset pre enter next",
+    "pre:rc": "changeset pre enter rc",
+    "pre:exit": "changeset pre exit",
+    "release:beta": "turbo run build && node scripts/publish-with-mnpm.cjs --tag beta",
+    "release:alpha": "turbo run build && node scripts/publish-with-mnpm.cjs --tag alpha",
+    "release:next": "turbo run build && node scripts/publish-with-mnpm.cjs --tag next",
+    "release:rc": "turbo run build && node scripts/publish-with-mnpm.cjs --tag rc",
+    "rm:node_modules": "find . -name \"node_modules\" -type d -prune -exec rm -rf '{}' +"
+  },
+  "devDependencies": {
+    "@changesets/cli": "^2.29.5",
+    "@commitlint/cli": "^19.2.2",
+    "@commitlint/config-conventional": "^19.2.2",
+    "@eslint/js": "^9.0.0",
+    "@types/node": "^20.11.0",
+    "@types/react": "^19.0.6",
+    "eslint": "^9.0.0",
+    "eslint-config-prettier": "^10.1.8",
+    "eslint-plugin-import": "2.32.0",
+    "eslint-plugin-n": "^17.23.1",
+    "eslint-plugin-promise": "^7.2.1",
+    "eslint-plugin-unicorn": "^62.0.0",
+    "glob": "^11.0.0",
+    "globals": "^15.0.0",
+    "husky": "^9.0.0",
+    "js-yaml": "^4.1.0",
+    "prettier": "^3.2.5",
+    "typescript": "^5.3.3",
+    "typescript-eslint": "^8.52.0"
+  },
+  "engines": {
+    "node": ">=18.0.0",
+    "pnpm": ">=8.0.0"
+  },
+  "packageManager": "pnpm@10.22.0",
+  "dependencies": {
+    "@langchain/anthropic": "^1.3.11",
+    "@langchain/community": "^1.1.5",
+    "@langchain/core": "^1.1.16",
+    "@langchain/langgraph": "^1.1.1",
+    "@langchain/langgraph-checkpoint": "^1.0.0",
+    "@langchain/openai": "^1.2.3",
+    "commander": "^14.0.2",
+    "dotenv": "^16.4.5",
+    "globby": "^16.1.0",
+    "ink": "^6.6.0",
+    "langchain": "^1.2.11",
+    "react": "^19.2.3",
+    "zod": "^4.3.5"
+  }
+}
