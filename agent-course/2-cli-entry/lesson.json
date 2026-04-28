@@ -1,0 +1,31 @@
+{
+  "lessonId": 2,
+  "title": "从 CLI 入口搭起 Agent 外壳",
+  "courseGoal": "理解命令行程序如何加载配置、创建 Agent，并把任务交给 Ink UI。",
+  "whyThisLessonFirst": "如果入口层没看懂，后面所有 Agent 逻辑都会显得很抽象。",
+  "whatLearnerWillBuildOrUnderstand": [
+    "知道 Commander 如何定义默认命令与子命令",
+    "知道 dry-run、init、continue 这些命令的职责",
+    "知道 render(CliApp) 为什么是交互式体验的起点"
+  ],
+  "focusFiles": [
+    "src/cli.ts",
+    "src/index.ts"
+  ],
+  "concepts": [
+    "命令行参数解析",
+    "应用启动流程",
+    "交互式 UI 挂载"
+  ],
+  "lessonFlow": [
+    "阅读 main 函数中的命令定义",
+    "分析 task、working-dir、model、verbose 如何影响运行时行为",
+    "理解 createAgent 与 AgentRunner 在入口层的职责边界"
+  ],
+  "handsOn": [
+    "尝试为 CLI 新增一个只打印当前配置的调试命令",
+    "解释为什么 dry-run 模式适合放在真正执行前面"
+  ],
+  "doneWhen": "学员可以独立解释一次命令行输入如何变成 CliApp 的 props。",
+  "nextLesson": 3
+}

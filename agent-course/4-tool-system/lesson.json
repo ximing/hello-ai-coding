@@ -1,0 +1,35 @@
+{
+  "lessonId": 4,
+  "title": "工具系统：让 Agent 真正能动手",
+  "courseGoal": "拆开文件、终端、代码搜索、Git 四类工具，让学员理解工具协议是 Agent 的执行基础。",
+  "whyThisLessonFirst": "没有工具，Agent 只能聊天；有了工具，它才开始具备工程执行力。",
+  "whatLearnerWillBuildOrUnderstand": [
+    "知道每个工具如何通过 zod 定义输入结构",
+    "知道工具为什么要统一返回字符串结果",
+    "知道 createAgent 为什么先创建工具再注入给模型"
+  ],
+  "focusFiles": [
+    "src/tools/file-tools.ts",
+    "src/tools/exec-tools.ts",
+    "src/tools/code-tools.ts",
+    "src/tools/git-tools.ts",
+    "src/tools/index.ts"
+  ],
+  "concepts": [
+    "工具 schema",
+    "工具职责拆分",
+    "执行前安全验证",
+    "工具结果格式化"
+  ],
+  "lessonFlow": [
+    "先看 file-tools，理解最基础的读写改查",
+    "再看 exec-tools，理解命令执行与超时控制",
+    "最后对比 code-tools 和 git-tools，理解垂直能力扩展"
+  ],
+  "handsOn": [
+    "尝试设计一个新的 grep 风格工具接口",
+    "比较 read_file 与 search_code 在教学中的职责差异"
+  ],
+  "doneWhen": "学员能自己总结出一个 Agent 工具应当至少包含输入、执行、校验、输出四部分。",
+  "nextLesson": 5
+}

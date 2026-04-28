@@ -1,0 +1,32 @@
+{
+  "lessonId": 7,
+  "title": "流式 UI：把 Agent 的过程展示出来",
+  "courseGoal": "让学员理解一个可用的 Agent 不只要会做事，还要把过程清楚地展示给用户。",
+  "whyThisLessonFirst": "用户体验决定教程是否好懂，UI 是把抽象 Agent 变成可观察系统的关键。",
+  "whatLearnerWillBuildOrUnderstand": [
+    "知道 Ink 组件如何在终端里渲染交互界面",
+    "知道 useInput、useState、useEffect 如何组织一次会话",
+    "知道 stream 返回的 chunk 是怎样映射到当前动作和结果列表的"
+  ],
+  "focusFiles": [
+    "src/ui/cli.tsx",
+    "src/ui/components.tsx"
+  ],
+  "concepts": [
+    "终端 React UI",
+    "流式响应处理",
+    "消息历史管理",
+    "工具执行可视化"
+  ],
+  "lessonFlow": [
+    "先看输入处理与快捷命令",
+    "再看 handleSubmit 如何发起一次 Agent stream",
+    "最后看各类组件如何分开展示消息、状态和帮助信息"
+  ],
+  "handsOn": [
+    "把当前工具结果显示得更完整，而不只是截断前 100 个字符",
+    "新增一个更明显的处理中状态，比如步骤计数或旋转指示器"
+  ],
+  "doneWhen": "学员能解释为什么这套 UI 能让 Agent 从黑盒变成可观察系统。",
+  "nextLesson": 8
+}

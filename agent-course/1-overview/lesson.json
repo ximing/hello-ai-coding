@@ -1,0 +1,34 @@
+{
+  "lessonId": 1,
+  "title": "先看懂这个极简 AI Agent 在做什么",
+  "courseGoal": "从用户视角理解当前项目的最小闭环：输入任务、调用模型、使用工具、返回结果。",
+  "whyThisLessonFirst": "教程先给全局地图，再进入具体模块，学员不会一上来就陷进实现细节。",
+  "whatLearnerWillBuildOrUnderstand": [
+    "知道这个 CLI Agent 的完整执行链路",
+    "知道哪些模块是主干，哪些模块是增强项",
+    "能说明当前版本为什么叫极简版"
+  ],
+  "focusFiles": [
+    "src/cli.ts",
+    "src/agent/agent.ts",
+    "src/ui/cli.tsx",
+    "src/tools/file-tools.ts",
+    "src/tools/exec-tools.ts"
+  ],
+  "concepts": [
+    "命令行入口负责接收任务并启动应用",
+    "Agent 负责把 LLM、工具和会话能力组装起来",
+    "UI 负责把推理和工具执行过程显示给用户"
+  ],
+  "lessonFlow": [
+    "从 ai-code 命令进入 src/cli.ts",
+    "跟踪 createAgent 如何初始化 LLM 与工具",
+    "观察 CliApp 如何把流式结果渲染出来"
+  ],
+  "handsOn": [
+    "画出 CLI -> Agent -> Tools -> UI 的最小架构图",
+    "用自己的话解释为什么这个项目已经能跑，但还没有完整的工程化能力"
+  ],
+  "doneWhen": "学员能不看代码也说清楚当前项目的核心职责分层。",
+  "nextLesson": 2
+}

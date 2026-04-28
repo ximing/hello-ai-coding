@@ -1,0 +1,33 @@
+{
+  "lessonId": 3,
+  "title": "配置系统与安全边界",
+  "courseGoal": "让学员知道 Agent 不只是调用模型，还需要配置优先级与最基本的安全限制。",
+  "whyThisLessonFirst": "在真实工具里，配置和安全边界决定了 Agent 能做什么、不能做什么。",
+  "whatLearnerWillBuildOrUnderstand": [
+    "知道默认配置、用户配置、环境变量覆盖的顺序",
+    "知道命令白名单和路径限制的作用",
+    "知道当前 requireConfirmation 只是能力预留，还没在主流程真正生效"
+  ],
+  "focusFiles": [
+    "src/utils/config.ts",
+    "src/utils/security.ts",
+    "src/cli.ts"
+  ],
+  "concepts": [
+    "配置合并策略",
+    "命令校验",
+    "路径沙箱",
+    "风险操作确认机制"
+  ],
+  "lessonFlow": [
+    "阅读 defaultConfig 了解系统默认能力",
+    "分析 loadConfig 如何合并不同来源的配置",
+    "观察 SecurityValidator 如何在工具执行前做拦截"
+  ],
+  "handsOn": [
+    "给 allowedCommands 增加一个安全命令并说明风险变化",
+    "说明 validatePath 为什么要限制工作目录之外的路径"
+  ],
+  "doneWhen": "学员能说出当前项目最重要的两类安全边界：命令边界和路径边界。",
+  "nextLesson": 4
+}

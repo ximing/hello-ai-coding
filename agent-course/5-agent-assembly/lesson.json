@@ -1,0 +1,32 @@
+{
+  "lessonId": 5,
+  "title": "把 LLM、工具和会话真正组装成 Agent",
+  "courseGoal": "聚焦 src/agent/agent.ts，理解这个项目最核心的装配逻辑。",
+  "whyThisLessonFirst": "前面学的是零件，这一课开始讲这些零件如何拼成可运行的 Agent。",
+  "whatLearnerWillBuildOrUnderstand": [
+    "知道 initChatModel 如何按 provider:model 初始化模型",
+    "知道 createReactAgent 为什么适合极简版 Agent",
+    "知道 sessionId、thread_id 和 MemorySaver 在会话中的位置"
+  ],
+  "focusFiles": [
+    "src/agent/agent.ts",
+    "src/agent/index.ts"
+  ],
+  "concepts": [
+    "LLM 初始化",
+    "工具注册",
+    "LangGraph ReAct Agent",
+    "会话线程配置"
+  ],
+  "lessonFlow": [
+    "阅读 createAgent 里的组件初始化顺序",
+    "观察 tools 数组如何成为 Agent 的能力边界",
+    "跟踪 AgentRunner.invoke 和 AgentRunner.stream 如何暴露调用方式"
+  ],
+  "handsOn": [
+    "解释 createAgent 返回值中的 agent、sessionId、workingDirectory、fileCache、tools 各自给谁用",
+    "尝试添加一个新的运行参数并让它传入 createAgent"
+  ],
+  "doneWhen": "学员能够独立说明 Agent 的创建过程，而不是只会说它调用了 LangGraph。",
+  "nextLesson": 6
+}

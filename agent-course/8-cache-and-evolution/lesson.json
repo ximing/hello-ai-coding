@@ -1,0 +1,33 @@
+{
+  "lessonId": 8,
+  "title": "缓存、局限与下一步演进",
+  "courseGoal": "在最后一课里收束全局，让学员知道当前极简版已经解决了什么、还缺什么、下一步该怎么扩。",
+  "whyThisLessonFirst": "教程不能只停留在看懂代码，还要帮助学员形成演进路线图。",
+  "whatLearnerWillBuildOrUnderstand": [
+    "知道文件缓存为什么能减少重复读取成本",
+    "知道当前项目仍然缺少完整会话恢复、真实确认流、测试体系等能力",
+    "知道如何把这个极简版继续演进成更完整的 AI Agent 教程项目"
+  ],
+  "focusFiles": [
+    "src/utils/file-cache.ts",
+    "src/cli.ts",
+    "specs/technical-design.md"
+  ],
+  "concepts": [
+    "缓存命中与失效",
+    "最小可用版本边界",
+    "教学路线与产品路线的区别",
+    "迭代优先级"
+  ],
+  "lessonFlow": [
+    "阅读 FileCache 如何统计 hits、misses 和失效",
+    "回看 cli.ts 里尚未完全实现的 continue、list-sessions、clean",
+    "结合 technical-design 提炼下一阶段课程或功能清单"
+  ],
+  "handsOn": [
+    "列出三个最值得优先补齐的能力，并说明先后顺序",
+    "把本教程下一版规划成进阶课，例如会话持久化、审批机制、测试与评估"
+  ],
+  "doneWhen": "学员能够从当前代码出发，提出一条合理的 Agent 迭代路线。",
+  "nextLesson": null
+}

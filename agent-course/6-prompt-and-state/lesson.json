@@ -1,0 +1,33 @@
+{
+  "lessonId": 6,
+  "title": "Prompt 与状态：决定 Agent 怎么想、记什么",
+  "courseGoal": "帮助学员理解行为约束与状态建模在 Agent 中各自扮演的角色。",
+  "whyThisLessonFirst": "很多人以为 Agent 只有模型和工具，但真正让行为稳定的是 Prompt 和状态设计。",
+  "whatLearnerWillBuildOrUnderstand": [
+    "知道 system prompt 如何定义 Agent 的角色、流程与安全要求",
+    "知道 AgentState 当前是预留设计，尚未完整接入运行主链路",
+    "知道为什么课程里要把行为描述和运行状态分开讲"
+  ],
+  "focusFiles": [
+    "src/agent/prompt.ts",
+    "src/agent/state.ts",
+    "src/agent/agent.ts"
+  ],
+  "concepts": [
+    "System Prompt",
+    "行为约束",
+    "状态结构设计",
+    "最小实现与未来扩展的差别"
+  ],
+  "lessonFlow": [
+    "阅读 createSystemPrompt 输出的规则集合",
+    "观察 createInitialState 目前记录了哪些字段",
+    "分析哪些状态已经真正生效，哪些只是为后续扩展做准备"
+  ],
+  "handsOn": [
+    "尝试把 executionPlan 真正展示到 UI 或日志中",
+    "讨论当前 prompt 中哪些规则偏通用，哪些规则已经贴近本项目"
+  ],
+  "doneWhen": "学员能明确区分 Prompt 是给模型的行为约束，State 是给系统的运行数据。",
+  "nextLesson": 7
+}
