@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Box, Text, useInput, useApp } from "ink";
 import type { Key } from "ink";
-import { SessionInfo, Message, AgentOutput, HelpInfo } from "./components.js";
+import { SessionInfo, Message, HelpInfo, LoadingIndicator } from "./components.js";
 import type { AgentRunner } from "../agent/agent.js";
 
 /**
@@ -17,9 +17,13 @@ export interface CliAppProps {
  * 消息类型
  */
 interface ChatMessage {
-  role: "user" | "assistant" | "system";
+  role: "user" | "assistant" | "system" | "completion";
   content: string;
   timestamp: Date;
+  /** 完成耗时（毫秒），仅 completion 类型使用 */
+  durationMs?: number;
+  /** 错误信息，仅 completion 类型使用 */
+  error?: string;
 }
 
 /**
@@ -31,6 +35,8 @@ interface AgentState {
   results: string[];
   completed: boolean;
   error?: string;
+  /** 任务开始时间 */
+  startTime?: number;
 }
 
 /**
@@ -68,7 +74,7 @@ export const CliApp: React.FC<CliAppProps> = ({
       handleSubmit();
     } else if (key.backspace || key.delete) {
       setInput((prev) => prev.slice(0, -1));
-    } else if (!key.ctrl && !key.meta && input.length === 1) {
+    } else if (!key.ctrl && !key.meta && input.length > 0) {
       setInput((prev) => prev + input);
     }
   });
@@ -122,9 +128,11 @@ export const CliApp: React.FC<CliAppProps> = ({
 
     setInput("");
     setIsProcessing(true);
+    const startTime = Date.now();
     setAgentState({
       results: [],
       completed: false,
+      startTime,
     });
 
     try {
@@ -194,14 +202,30 @@ export const CliApp: React.FC<CliAppProps> = ({
         ]);
       }
 
+      // 计算耗时
+      const durationMs = Date.now() - startTime;
+
       setAgentState((prev) => ({
         ...prev,
         completed: true,
         currentAction: undefined,
       }));
+
+      // 添加完成提示消息
+      setMessages((prev) => [
+        ...prev,
+        {
+          role: "completion",
+          content: "done",
+          timestamp: new Date(),
+          durationMs,
+        },
+      ]);
     } catch (error) {
       const errorMessage =
         error instanceof Error ? error.message : "Unknown error";
+      const durationMs = Date.now() - startTime;
+
       setMessages((prev) => [
         ...prev,
         {
@@ -215,6 +239,18 @@ export const CliApp: React.FC<CliAppProps> = ({
         completed: true,
         error: errorMessage,
       });
+
+      // 添加失败提示消息
+      setMessages((prev) => [
+        ...prev,
+        {
+          role: "completion",
+          content: "error",
+          timestamp: new Date(),
+          durationMs,
+          error: errorMessage,
+        },
+      ]);
     } finally {
       setIsProcessing(false);
     }
@@ -245,19 +281,21 @@ export const CliApp: React.FC<CliAppProps> = ({
       {/* 消息历史 */}
       <Box flexDirection="column" marginBottom={1}>
         {messages.map((msg, idx) => (
-          <Message key={idx} role={msg.role} content={msg.content} />
+          <Message
+            key={idx}
+            role={msg.role}
+            content={msg.content}
+            durationMs={msg.durationMs}
+            error={msg.error}
+          />
         ))}
       </Box>
 
-      {/* Agent 状态 */}
+      {/* Loading 指示器 */}
       {isProcessing && (
-        <AgentOutput
-          thinking={agentState.thinking}
-          currentAction={agentState.currentAction}
-          results={agentState.results}
-          completed={agentState.completed}
-          error={agentState.error}
-        />
+        <Box marginBottom={1}>
+          <LoadingIndicator currentAction={agentState.currentAction} />
+        </Box>
       )}
 
       {/* 输入框 */}

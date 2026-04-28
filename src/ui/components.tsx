@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { Box, Text } from "ink";
 
 /**
@@ -152,14 +152,35 @@ export const SessionInfo: React.FC<SessionInfoProps> = ({
  * 消息组件属性
  */
 export interface MessageProps {
-  role: "user" | "assistant" | "system";
+  role: "user" | "assistant" | "system" | "completion";
   content: string;
+  /** 完成耗时（毫秒），仅 completion 角色使用 */
+  durationMs?: number;
+  /** 错误信息，仅 completion 角色使用 */
+  error?: string;
 }
 
 /**
  * 消息显示组件
  */
-export const Message: React.FC<MessageProps> = ({ role, content }) => {
+export const Message: React.FC<MessageProps> = ({
+  role,
+  content,
+  durationMs,
+  error,
+}) => {
+  // completion 角色使用专门的 CompletionIndicator
+  if (role === "completion") {
+    return (
+      <Box marginBottom={1}>
+        <CompletionIndicator
+          error={error}
+          durationMs={durationMs ?? 0}
+        />
+      </Box>
+    );
+  }
+
   const getIcon = () => {
     switch (role) {
       case "user":
@@ -239,6 +260,140 @@ export const HelpInfo: React.FC = () => {
       <Text>  • Type 'help' for more information</Text>
       <Text>  • Type 'clear' to clear the screen</Text>
       <Text>  • Type 'status' to see session information</Text>
+    </Box>
+  );
+};
+
+/**
+ * Loading 随机文案列表
+ */
+const LOADING_MESSAGES = [
+  "Thinking...",
+  "Working on it...",
+  "Doing my thing...",
+  "Crunching...",
+  "Processing...",
+  "Hang tight...",
+  "Be right back...",
+  "Gears turning...",
+  "Almost there...",
+  "On it...",
+  "Figuring it out...",
+  "Give me a sec...",
+  "Brewing something up...",
+  "Connecting the dots...",
+  "Wrangling bits...",
+  "Stirring the pot...",
+  "Spinning up...",
+  "Making progress...",
+  "Pondering...",
+  "Chugging along...",
+];
+
+/**
+ * 旋转动画帧
+ */
+const SPINNER_FRAMES = ["⠋", "⠙", "⠹", "⠸", "⠼", "⠴", "⠦", "⠧", "⠇", "⠏"];
+
+/**
+ * Loading 指示器属性
+ */
+export interface LoadingIndicatorProps {
+  /** 当前执行的工具/动作名称 */
+  currentAction?: string;
+}
+
+/**
+ * Loading 指示器组件
+ * 显示旋转动画 + 随机轮播文案，类似 Claude Code 风格
+ */
+export const LoadingIndicator: React.FC<LoadingIndicatorProps> = ({
+  currentAction,
+}) => {
+  const [frameIndex, setFrameIndex] = useState(0);
+  const [messageIndex, setMessageIndex] = useState(
+    Math.floor(Math.random() * LOADING_MESSAGES.length)
+  );
+
+  // 旋转动画：每 80ms 切换一帧
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setFrameIndex((prev) => (prev + 1) % SPINNER_FRAMES.length);
+    }, 80);
+    return () => clearInterval(timer);
+  }, []);
+
+  // 随机文案：每 3 秒切换一条
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setMessageIndex((prev) => {
+        let next: number;
+        do {
+          next = Math.floor(Math.random() * LOADING_MESSAGES.length);
+        } while (next === prev);
+        return next;
+      });
+    }, 3000);
+    return () => clearInterval(timer);
+  }, []);
+
+  return (
+    <Box flexDirection="column">
+      <Box>
+        <Text color="cyan">{SPINNER_FRAMES[frameIndex]} </Text>
+        <Text color="cyan">{LOADING_MESSAGES[messageIndex]}</Text>
+      </Box>
+      {currentAction && (
+        <Box marginLeft={2}>
+          <Text color="yellow">↳ 使用工具: {currentAction}</Text>
+        </Box>
+      )}
+    </Box>
+  );
+};
+
+/**
+ * 完成提示属性
+ */
+export interface CompletionIndicatorProps {
+  /** 是否有错误 */
+  error?: string;
+  /** 执行耗时（毫秒） */
+  durationMs: number;
+}
+
+/**
+ * 完成提示组件
+ * 灰色字体显示已完成 + 耗时
+ */
+export const CompletionIndicator: React.FC<CompletionIndicatorProps> = ({
+  error,
+  durationMs,
+}) => {
+  const formatDuration = (ms: number): string => {
+    if (ms < 1000) {
+      return `${ms}ms`;
+    }
+    const seconds = ms / 1000;
+    if (seconds < 60) {
+      return `${seconds.toFixed(1)}s`;
+    }
+    const minutes = Math.floor(seconds / 60);
+    const remainingSeconds = (seconds % 60).toFixed(0);
+    return `${minutes}m ${remainingSeconds}s`;
+  };
+
+  if (error) {
+    return (
+      <Box>
+        <Text dimColor>✗ 执行失败 · {formatDuration(durationMs)}</Text>
+      </Box>
+    );
+  }
+
+  return (
+    <Box>
+      <Text dimColor>✓ 已完成 · {formatDuration(durationMs)}</Text>
     </Box>
   );
 };
